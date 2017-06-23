@@ -29,10 +29,10 @@ server {
   ssl_certificate     /etc/nginx/certs/supersecret.net.pem;
   ssl_certificate_key /etc/nginx/certs/supersecret.net.key;
 
-  set $ngo_client_id      "abc-def.apps.googleusercontent.com";
-  set $ngo_client_secret  "abcdefg-123-xyz";
-  set $ngo_token_secret   "a very long randomish string";
-  set $ngo_secure_cookies "true";
+  set $ngo_client_id         "abc-def.apps.googleusercontent.com";
+  set $ngo_client_secret     "abcdefg-123-xyz";
+  set $ngo_token_secret      "a very long randomish string";
+  set $ngo_secure_cookies    "true";
   set $ngo_http_only_cookies "true";
 
   access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
