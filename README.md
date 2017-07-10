@@ -54,10 +54,10 @@ variables are:
 - **$ngo_secure_cookies** If defined, will ensure that cookies can only
   be transferred over a secure connection.
 - **$ngo_extra_validity** Time in seconds to add to token validity period.
-- **$ngo_domain** The domain to use for validating users when not using
-  white- or blacklists.
-- **$ngo_whitelist** Optional list of authorized email addresses.
-- **$ngo_blacklist** Optional list of unauthorized email addresses.
+-- **$ngo_domain** The space separated list of domains to use for validating
+   users when not using white- or blacklists.
+- **$ngo_whitelist** Optional space separated list of authorized email addresses.
+- **$ngo_blacklist** Optional space separated list of unauthorized email addresses.
 - **$ngo_user** If set, will be populated with the OAuth username
   returned from Google (portion left of '@' in email).
 - **$ngo_email_as_user** If set and `$ngo_user` is defined, username
@@ -171,6 +171,35 @@ this includes:
 * Headers for upstream servers
 * Lua scripts
 * etc.
+
+### Blacklist/Whitelist
+
+For blacklist the site, not even reach oauth, use this nginx example:
+
+```
+    access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
+    deny your_blacklist_ip;
+    satisfy all
+```
+
+For whitelist (ie: disable oauth for this ip) use this works:
+
+```
+    access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
+    allow your_whitelist_ip;
+    satisfy any;
+```
+
+Notice the satisfy any
+
+For allowing only one ip and block all others, but still oauth it, use this:
+
+```
+    access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
+    allow your_whitelist_ip;
+    deny all;
+    satisfy all;
+```
 
 ### Docker image
 
