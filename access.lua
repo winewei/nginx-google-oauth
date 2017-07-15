@@ -63,7 +63,7 @@ local function on_auth(email, token, expires)
 
   if not (whitelist or blacklist) then
     if domain:len() ~= 0 then
-      if oauth_domain ~= domain then
+      if not string.find(" " .. domain .. " ", " " .. oauth_domain .. " ") then
         ngx.log(ngx.ERR, email .. " is not on " .. domain)
         return ngx.exit(ngx.HTTP_FORBIDDEN)
       end
@@ -177,6 +177,7 @@ local function is_authorized()
 end
 
 local function redirect_to_auth()
+  -- google seems to accept space separated domain list in the login_hint, so use this undocumented feature.
   return ngx.redirect("https://accounts.google.com/o/oauth2/auth?" .. ngx.encode_args({
     client_id     = client_id,
     scope         = "email",
