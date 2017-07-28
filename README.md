@@ -54,7 +54,7 @@ variables are:
 - **$ngo_secure_cookies** If defined, will ensure that cookies can only
   be transferred over a secure connection.
 - **$ngo_extra_validity** Time in seconds to add to token validity period.
--- **$ngo_domain** The space separated list of domains to use for validating
+- **$ngo_domain** The space separated list of domains to use for validating
    users when not using white- or blacklists.
 - **$ngo_whitelist** Optional space separated list of authorized email addresses.
 - **$ngo_blacklist** Optional space separated list of unauthorized email addresses.
