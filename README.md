@@ -174,7 +174,7 @@ this includes:
 
 ### Blacklist/Whitelist
 
-For blacklist the site, not even reach oauth, use this nginx example:
+For blacklist the site, not even reaching oauth, use this nginx example:
 
 ```
     access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
@@ -182,7 +182,7 @@ For blacklist the site, not even reach oauth, use this nginx example:
     satisfy all
 ```
 
-For whitelist (ie: disable oauth for this ip) use this works:
+For whitelist (ie: disable oauth for this ip) use this:
 
 ```
     access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
@@ -190,9 +190,9 @@ For whitelist (ie: disable oauth for this ip) use this works:
     satisfy any;
 ```
 
-Notice the satisfy any
+Notice the satisfy any. You can also add several allow entries.
 
-For allowing only one ip and block all others, but still oauth it, use this:
+For allowing only one ip, block all others, and still oauth it, use this:
 
 ```
     access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
