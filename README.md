@@ -57,7 +57,7 @@ variables are:
 - **$ngo_http_only_cookies** If defined, will ensure that cookies cannot
   be accessed via javascript.
 - **$ngo_extra_validity** Time in seconds to add to token validity period.
--- **$ngo_domain** The space separated list of domains to use for validating
+- **$ngo_domain** The space separated list of domains to use for validating
    users when not using white- or blacklists.
 - **$ngo_whitelist** Optional space separated list of authorized email addresses.
 - **$ngo_blacklist** Optional space separated list of unauthorized email addresses.
@@ -177,7 +177,7 @@ this includes:
 
 ### Blacklist/Whitelist
 
-For blacklist the site, not even reach oauth, use this nginx example:
+For blacklist the site, not even reaching oauth, use this nginx example:
 
 ```
     access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
@@ -185,7 +185,7 @@ For blacklist the site, not even reach oauth, use this nginx example:
     satisfy all
 ```
 
-For whitelist (ie: disable oauth for this ip) use this works:
+For whitelist (ie: disable oauth for this ip) use this:
 
 ```
     access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
@@ -193,9 +193,9 @@ For whitelist (ie: disable oauth for this ip) use this works:
     satisfy any;
 ```
 
-Notice the satisfy any
+Notice the satisfy any. You can also add several allow entries.
 
-For allowing only one ip and block all others, but still oauth it, use this:
+For allowing only one ip, block all others, and still oauth it, use this:
 
 ```
     access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
