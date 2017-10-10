@@ -58,11 +58,11 @@ local function handle_token_uris(email, token, expires)
   end
 end
 
-local function check_domain(email,whitelist)
+local function check_domain(email,whitelist_failed)
   local oauth_domain = email:match("[^@]+@(.+)")
   if domain:len() ~= 0 then
     if not string.find(" " .. domain .. " ", " " .. oauth_domain .. " ", 1, true) then
-      if whitelist ==  1 then
+      if whitelist_failed ==  1 then
         ngx.log(ngx.ERR, email .. " is not on " .. domain .. " nor in the whitelist" )
       else
         ngx.log(ngx.ERR, email .. " is not on " .. domain)
