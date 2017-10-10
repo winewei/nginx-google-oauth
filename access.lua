@@ -60,6 +60,7 @@ end
 
 local function check_domain(email,whitelist_failed)
   local oauth_domain = email:match("[^@]+@(.+)")
+  -- if domain is configured, check it, if it isn't, permit request
   if domain:len() ~= 0 then
     if not string.find(" " .. domain .. " ", " " .. oauth_domain .. " ", 1, true) then
       if whitelist_failed ==  1 then
@@ -75,6 +76,7 @@ end
 local function on_auth(email, token, expires)
 
   if blacklist then
+    -- blacklisted user is rejected, do not even check the domain
     if string.find(" " .. blacklist .. " ", " " .. email .. " ", 1, true) then
       ngx.log(ngx.ERR, email .. " is in blacklist")
       return ngx.exit(ngx.HTTP_FORBIDDEN)
@@ -82,10 +84,12 @@ local function on_auth(email, token, expires)
   end
 
   if whitelist then
+    -- if whitelisted, no need to check the domain, if not whitelisted, check the domain
     if not string.find(" " .. whitelist .. " ", " " .. email .. " ", 1, true) then
       check_domain(email,1)
     end
   else
+    -- no whitelist, lets check the domain
     check_domain(email,0)
   end
 
