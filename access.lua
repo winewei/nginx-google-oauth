@@ -76,7 +76,7 @@ end
 local function on_auth(email, token, expires)
 
   if blacklist then
-    -- blacklisted user is rejected, do not even check the domain
+    -- blacklisted user is always rejected
     if string.find(" " .. blacklist .. " ", " " .. email .. " ", 1, true) then
       ngx.log(ngx.ERR, email .. " is in blacklist")
       return ngx.exit(ngx.HTTP_FORBIDDEN)
@@ -84,12 +84,12 @@ local function on_auth(email, token, expires)
   end
 
   if whitelist then
-    -- if whitelisted, no need to check the domain, if not whitelisted, check the domain
+    -- if whitelisted, no need check the if it's a valid domain
     if not string.find(" " .. whitelist .. " ", " " .. email .. " ", 1, true) then
       check_domain(email, true)
     end
   else
-    -- no whitelist, lets check the domain
+    -- empty whitelist, lets check if it's a valid domain
     check_domain(email, false)
   end
 
