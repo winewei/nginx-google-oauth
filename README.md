@@ -206,7 +206,7 @@ For allowing only one ip, block all others, and still oauth it, use this:
 
 ### Docker image
 
-You have to [obtain tokens](#Configuring OAuth access) first.
+You have to [obtain tokens](#configuring-oauth-access) first.
 
 There is a pre-built image: `cloudflare/nginx-google-oauth`. If you are
 hacking on this project, you might want to rebuild the image yourself.
