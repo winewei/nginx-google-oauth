@@ -74,7 +74,6 @@ local function check_domain(email, whitelist_failed)
 end
 
 local function on_auth(email, token, expires)
-
   if blacklist then
     -- blacklisted user is always rejected
     if string.find(" " .. blacklist .. " ", " " .. email .. " ", 1, true) then
