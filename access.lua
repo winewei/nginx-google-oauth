@@ -58,32 +58,40 @@ local function handle_token_uris(email, token, expires)
   end
 end
 
-
-local function on_auth(email, token, expires)
+local function check_domain(email, whitelist_failed)
   local oauth_domain = email:match("[^@]+@(.+)")
-
-  if not (whitelist or blacklist) then
-    if domain:len() ~= 0 then
-      if not string.find(" " .. domain .. " ", " " .. oauth_domain .. " ", 1, true) then
+  -- if domain is configured, check it, if it isn't, permit request
+  if domain:len() ~= 0 then
+    if not string.find(" " .. domain .. " ", " " .. oauth_domain .. " ", 1, true) then
+      if whitelist_failed then
+        ngx.log(ngx.ERR, email .. " is not on " .. domain .. " nor in the whitelist")
+      else
         ngx.log(ngx.ERR, email .. " is not on " .. domain)
-        return ngx.exit(ngx.HTTP_FORBIDDEN)
       end
-    end
-  end
-
-  if whitelist then
-    if not string.find(" " .. whitelist .. " ", " " .. email .. " ", 1, true) then
-      ngx.log(ngx.ERR, email .. " is not in whitelist")
       return ngx.exit(ngx.HTTP_FORBIDDEN)
     end
   end
+end
 
+local function on_auth(email, token, expires)
   if blacklist then
+    -- blacklisted user is always rejected
     if string.find(" " .. blacklist .. " ", " " .. email .. " ", 1, true) then
       ngx.log(ngx.ERR, email .. " is in blacklist")
       return ngx.exit(ngx.HTTP_FORBIDDEN)
     end
   end
+
+  if whitelist then
+    -- if whitelisted, no need check the if it's a valid domain
+    if not string.find(" " .. whitelist .. " ", " " .. email .. " ", 1, true) then
+      check_domain(email, true)
+    end
+  else
+    -- empty whitelist, lets check if it's a valid domain
+    check_domain(email, false)
+  end
+
 
   if set_user then
     if email_as_user then
