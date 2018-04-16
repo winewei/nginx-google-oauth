@@ -47,7 +47,7 @@ variables are:
 - **$ngo_callback_scheme** The scheme for the callback URL,
   defaults to that of the request (e.g. `https`).
 - **$ngo_callback_uri** The URI for the callback, defaults to `/_oauth`.
-- **$ngo_ngo_signout_uri** The URI for sign-out endpoint.
+- **$ngo_signout_uri** The URI for sign-out endpoint.
 - **$ngo_client_id** This is the client id key.
 - **$ngo_client_secret** This is the client secret.
 - **$ngo_token_secret** The key used to encrypt the session token stored
