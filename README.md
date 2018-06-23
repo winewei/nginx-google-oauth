@@ -247,7 +247,7 @@ docker run --rm -it --net host \
   -e NGO_CLIENT_ID="client id from google" \
   -e NGO_CLIENT_SECRET="client secret from google" \
   -e NGO_TOKEN_SECRET="random token secret" \
-  cloudflare/nginx-google-oauth:1.1
+  cloudflare/nginx-google-oauth:1.1.1
 ```
 
 Then open your browser at http://ngo.lol and you should get Google OAuth screen.
