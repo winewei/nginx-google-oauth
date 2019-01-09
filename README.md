@@ -35,6 +35,14 @@ server {
   set $ngo_secure_cookies    "true";
   set $ngo_http_only_cookies "true";
 
+  # disable ipv6 domain resolve.
+  resolver 8.8.8.8 ipv6=off;
+
+  # config subrequest ssl certs. 
+  lua_ssl_verify_depth    5;
+  lua_ssl_trusted_certificate /etc/ssl/certs/ca-bundle.trust.crt;
+
+
   access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
 }
 ```
