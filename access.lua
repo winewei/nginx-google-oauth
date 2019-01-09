@@ -204,19 +204,22 @@ local function authorize()
 
   if uri_args["error"] then
     ngx.log(ngx.ERR, "received " .. uri_args["error"] .. " from https://accounts.google.com/o/oauth2/auth")
-    return ngx.exit(ngx.HTTP_FORBIDDEN)
+    --return ngx.exit(ngx.HTTP_FORBIDDEN)
+    return redirect_to_auth()
   end
 
   local token, token_err = request_access_token(uri_args["code"])
   if not token then
     ngx.log(ngx.ERR, "got error during access token request: " .. token_err)
-    return ngx.exit(ngx.HTTP_FORBIDDEN)
+    --return ngx.exit(ngx.HTTP_FORBIDDEN)
+    return redirect_to_auth()
   end
 
   local profile, profile_err = request_profile(token["access_token"])
   if not profile then
     ngx.log(ngx.ERR, "got error during profile request: " .. profile_err)
-    return ngx.exit(ngx.HTTP_FORBIDDEN)
+    --return ngx.exit(ngx.HTTP_FORBIDDEN)
+    return redirect_to_auth()
   end
 
   local expires      = ngx.time() + token["expires_in"]
